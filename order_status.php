@@ -3,7 +3,12 @@ require_once "config.php";
 
 mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
-$success_message = "";
+function h($value)
+{
+    return htmlspecialchars((string)$value, ENT_QUOTES);
+}
+
+$success_message = isset($_GET["msg"]) ? trim($_GET["msg"]) : "";
 $error_message = "";
 $orders = [];
 
@@ -16,6 +21,24 @@ $filters = [
     "DateFrom" => isset($_GET["DateFrom"]) ? trim($_GET["DateFrom"]) : "",
     "DateTo" => isset($_GET["DateTo"]) ? trim($_GET["DateTo"]) : ""
 ];
+
+// Handle delete
+if ($_SERVER["REQUEST_METHOD"] === "POST" && ($_POST["action"] ?? "") === "delete_order") {
+    $deleteId = isset($_POST["OrderID"]) ? (int)$_POST["OrderID"] : 0;
+    if ($deleteId <= 0) {
+        $error_message = "Invalid OrderID for delete.";
+    } else {
+        try {
+            $stmt = $conn->prepare("DELETE FROM Orders WHERE OrderID = ?");
+            $stmt->bind_param("i", $deleteId);
+            $stmt->execute();
+            $stmt->close();
+            $success_message = "Order #{$deleteId} deleted.";
+        } catch (Exception $e) {
+            $error_message = "Unable to delete order: " . $e->getMessage();
+        }
+    }
+}
 
 try {
     $sql = "
@@ -106,10 +129,10 @@ try {
   <main>
     <div class="container">
       <?php if (!empty($success_message)): ?>
-        <p class="helper-text" style="color:#22c55e;"><?php echo htmlspecialchars($success_message); ?></p>
+        <div class="alert alert-success"><?php echo h($success_message); ?></div>
       <?php endif; ?>
       <?php if (!empty($error_message)): ?>
-        <p class="helper-text" style="color:#f97373;"><?php echo htmlspecialchars($error_message); ?></p>
+        <div class="alert alert-error"><?php echo h($error_message); ?></div>
       <?php endif; ?>
 
       <section class="card">
@@ -125,11 +148,11 @@ try {
           <div class="form-grid form-grid-2">
             <div class="form-group">
               <label for="searchOrderId">Order ID</label>
-              <input id="searchOrderId" name="OrderID" type="text" value="<?php echo htmlspecialchars($filters["OrderID"]); ?>" placeholder="e.g. 1001">
+              <input id="searchOrderId" name="OrderID" type="text" value="<?php echo h($filters["OrderID"]); ?>" placeholder="e.g. 1001">
             </div>
             <div class="form-group">
               <label for="searchCustomerId">Customer ID</label>
-              <input id="searchCustomerId" name="CustomerID" type="text" value="<?php echo htmlspecialchars($filters["CustomerID"]); ?>" placeholder="e.g. 1">
+              <input id="searchCustomerId" name="CustomerID" type="text" value="<?php echo h($filters["CustomerID"]); ?>" placeholder="e.g. 1">
             </div>
             <div class="form-group">
               <label for="searchStatus">Status</label>
@@ -151,11 +174,11 @@ try {
             </div>
             <div class="form-group">
               <label for="dateFrom">Order Date (from)</label>
-              <input id="dateFrom" name="DateFrom" type="date" value="<?php echo htmlspecialchars($filters["DateFrom"]); ?>">
+              <input id="dateFrom" name="DateFrom" type="date" value="<?php echo h($filters["DateFrom"]); ?>">
             </div>
             <div class="form-group">
               <label for="dateTo">Order Date (to)</label>
-              <input id="dateTo" name="DateTo" type="date" value="<?php echo htmlspecialchars($filters["DateTo"]); ?>">
+              <input id="dateTo" name="DateTo" type="date" value="<?php echo h($filters["DateTo"]); ?>">
             </div>
           </div>
           <div class="btn-row">
@@ -181,23 +204,32 @@ try {
                 <th>Status</th>
                 <th>Channel</th>
                 <th>TotalAmount</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               <?php if (empty($orders)): ?>
                 <tr>
-                  <td colspan="7" style="text-align:center;">No orders found.</td>
+                  <td colspan="8" style="text-align:center;">No orders found.</td>
                 </tr>
               <?php else: ?>
                 <?php foreach ($orders as $row): ?>
                   <tr>
-                    <td><?php echo htmlspecialchars($row["OrderID"]); ?></td>
-                    <td><?php echo htmlspecialchars($row["CustomerID"] . " - " . ($row["CustomerName"] ?? "")); ?></td>
-                    <td><?php echo htmlspecialchars(($row["EmployeeID"] ? $row["EmployeeID"] : "N/A") . " " . ($row["EmployeeName"] ?? "")); ?></td>
-                    <td><?php echo htmlspecialchars($row["OrderDate"]); ?></td>
-                    <td><?php echo htmlspecialchars($row["Status"]); ?></td>
-                    <td><?php echo htmlspecialchars($row["Channel"]); ?></td>
-                    <td><?php echo htmlspecialchars(number_format((float)$row["TotalAmount"], 2)); ?></td>
+                    <td><?php echo h($row["OrderID"]); ?></td>
+                    <td><?php echo h($row["CustomerID"] . " - " . ($row["CustomerName"] ?? "")); ?></td>
+                    <td><?php echo h(($row["EmployeeID"] ? $row["EmployeeID"] : "—") . " " . ($row["EmployeeName"] ?? "")); ?></td>
+                    <td><?php echo h($row["OrderDate"]); ?></td>
+                    <td><span class="badge"><?php echo h($row["Status"]); ?></span></td>
+                    <td><?php echo h($row["Channel"]); ?></td>
+                    <td><?php echo h(number_format((float)$row["TotalAmount"], 2)); ?></td>
+                    <td class="table-actions">
+                      <a class="btn btn-small" href="customer_order.php?mode=edit&order_id=<?php echo h($row["OrderID"]); ?>">View / Edit</a>
+                      <form action="order_status.php" method="post" style="display:inline;">
+                        <input type="hidden" name="action" value="delete_order">
+                        <input type="hidden" name="OrderID" value="<?php echo h($row["OrderID"]); ?>">
+                        <button type="submit" class="btn btn-danger btn-small">Delete</button>
+                      </form>
+                    </td>
                   </tr>
                 <?php endforeach; ?>
               <?php endif; ?>

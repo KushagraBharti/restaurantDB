@@ -1,23 +1,33 @@
 <?php
 require_once "config.php";
 
+function h($value)
+{
+    return htmlspecialchars((string)$value, ENT_QUOTES);
+}
+
 $success_message = "";
 $error_message = "";
 
-// Optional quick stats for dashboard
-$counts = [
-    "Customers" => null,
-    "Employees" => null,
-    "MenuItems" => null,
-    "Orders" => null
+$statQueries = [
+    "Customers" => "SELECT COUNT(*) AS cnt FROM Customers",
+    "Orders" => "SELECT COUNT(*) AS cnt FROM Orders",
+    "ActiveMenu" => "SELECT COUNT(*) AS cnt FROM MenuItems WHERE IsActive = 1",
+    "Employees" => "SELECT COUNT(*) AS cnt FROM Employees",
+    "Ingredients" => "SELECT COUNT(*) AS cnt FROM Ingredients"
 ];
 
-foreach (array_keys($counts) as $table) {
-    $sql = "SELECT COUNT(*) AS cnt FROM {$table}";
-    $result = $conn->query($sql);
-    if ($result) {
-        $row = $result->fetch_assoc();
-        $counts[$table] = (int)$row["cnt"];
+$counts = [];
+foreach ($statQueries as $key => $sql) {
+    try {
+        $result = $conn->query($sql);
+        if ($result) {
+            $row = $result->fetch_assoc();
+            $counts[$key] = (int)$row["cnt"];
+        }
+    } catch (Exception $e) {
+        $error_message = "Problem loading dashboard stats: " . $e->getMessage();
+        break;
     }
 }
 ?>
@@ -45,10 +55,10 @@ foreach (array_keys($counts) as $table) {
   <main>
     <div class="container">
       <?php if (!empty($success_message)): ?>
-        <p class="helper-text" style="color:#22c55e;"><?php echo htmlspecialchars($success_message); ?></p>
+        <div class="alert alert-success"><?php echo h($success_message); ?></div>
       <?php endif; ?>
       <?php if (!empty($error_message)): ?>
-        <p class="helper-text" style="color:#f97373;"><?php echo htmlspecialchars($error_message); ?></p>
+        <div class="alert alert-error"><?php echo h($error_message); ?></div>
       <?php endif; ?>
 
       <section class="card">
@@ -59,36 +69,39 @@ foreach (array_keys($counts) as $table) {
           Minimal PHP + MySQL front-end for the Restaurant Database System.
           These pages match our EER diagram and relational schema and now connect to live data.
         </p>
-        <div class="form-grid form-grid-2">
-          <div>
-            <h2 class="card-title">Core Entities</h2>
-            <ul class="helper-text" style="margin-top:0.5rem; list-style:disc; padding-left:1.2rem;">
-              <li>Customers (<?php echo $counts["Customers"] ?? "N/A"; ?>)</li>
-              <li>Employees (<?php echo $counts["Employees"] ?? "N/A"; ?>)</li>
-              <li>MenuItems (<?php echo $counts["MenuItems"] ?? "N/A"; ?>)</li>
-              <li>Ingredients</li>
-              <li>Orders (<?php echo $counts["Orders"] ?? "N/A"; ?>)</li>
-              <li>OrderItems</li>
-              <li>RecipeComponents</li>
-              <li>Payments</li>
-            </ul>
-          </div>
-          <div>
-            <h2 class="card-title">Main Screens</h2>
-            <ul class="helper-text" style="margin-top:0.5rem; list-style:disc; padding-left:1.2rem;">
-              <li>Place new customer orders</li>
-              <li>Search and view orders</li>
-              <li>Manage menu items &amp; recipe components</li>
-              <li>Manage ingredients and stock levels</li>
-              <li>Manage employees</li>
-            </ul>
-          </div>
+
+        <div class="stat-grid">
+          <a class="stat-card" href="order_status.php">
+            <div class="stat-label">Orders</div>
+            <div class="stat-value"><?php echo h($counts["Orders"] ?? "—"); ?></div>
+            <div class="stat-sub">View recent orders</div>
+          </a>
+          <a class="stat-card" href="manage_menu_items.php">
+            <div class="stat-label">Active Menu Items</div>
+            <div class="stat-value"><?php echo h($counts["ActiveMenu"] ?? "—"); ?></div>
+            <div class="stat-sub">Maintain dishes</div>
+          </a>
+          <a class="stat-card" href="manage_employees.php">
+            <div class="stat-label">Employees</div>
+            <div class="stat-value"><?php echo h($counts["Employees"] ?? "—"); ?></div>
+            <div class="stat-sub">Staff roster</div>
+          </a>
+          <a class="stat-card" href="manage_ingredients.php">
+            <div class="stat-label">Ingredients</div>
+            <div class="stat-value"><?php echo h($counts["Ingredients"] ?? "—"); ?></div>
+            <div class="stat-sub">Inventory</div>
+          </a>
+          <a class="stat-card" href="customer_order.php">
+            <div class="stat-label">Customers</div>
+            <div class="stat-value"><?php echo h($counts["Customers"] ?? "—"); ?></div>
+            <div class="stat-sub">Create orders</div>
+          </a>
         </div>
       </section>
 
       <section class="card">
         <div class="card-header">
-          <h2 class="card-title">Quick Navigation</h2>
+          <h2 class="card-title">Main Screens</h2>
         </div>
         <div class="form-grid form-grid-2">
           <a class="btn btn-outline" href="customer_order.php">🚀 Place / Edit Order</a>
