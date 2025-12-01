@@ -1,0 +1,125 @@
+/* order_status.html */
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Order Search – Restaurant DB System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-title">Restaurant Database System</div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="customer_order.html">Place Order</a>
+        <a href="manage_menu_items.html">Menu Items</a>
+        <a href="manage_ingredients.html">Ingredients</a>
+        <a href="manage_employees.html">Employees</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="card">
+        <div class="card-header">
+          <h1 class="page-title">Order Search &amp; Status</h1>
+          <span class="tag">Orders, Customers, Employees, Payments</span>
+        </div>
+        <p class="page-subtitle">
+          This page will later show the result of SQL queries over the <strong>Orders</strong>,
+          <strong>OrderItems</strong>, and <strong>Payments</strong> tables.
+        </p>
+
+        <form action="search_orders.php" method="get">
+          <div class="form-grid form-grid-2">
+            <div class="form-group">
+              <label for="searchOrderId">Order ID</label>
+              <input id="searchOrderId" name="OrderID" type="text" placeholder="e.g. O1001">
+            </div>
+            <div class="form-group">
+              <label for="searchCustomerId">Customer ID</label>
+              <input id="searchCustomerId" name="CustomerID" type="text" placeholder="e.g. C001">
+            </div>
+            <div class="form-group">
+              <label for="searchStatus">Status</label>
+              <select id="searchStatus" name="Status">
+                <option value="">Any status</option>
+                <option value="Pending">Pending</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="searchChannel">Channel</label>
+              <select id="searchChannel" name="Channel">
+                <option value="">Any channel</option>
+                <option value="In-Person">In-Person</option>
+                <option value="Online">Online</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="dateFrom">Order Date (from)</label>
+              <input id="dateFrom" name="DateFrom" type="date">
+            </div>
+            <div class="form-group">
+              <label for="dateTo">Order Date (to)</label>
+              <input id="dateTo" name="DateTo" type="date">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <button type="reset" class="btn btn-outline">Clear Filters</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2 class="card-title">Sample Results (static for now)</h2>
+          <span class="card-note">In the real system, this table will be filled using PHP + SQL.</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>OrderID</th>
+                <th>CustomerID</th>
+                <th>EmployeeID</th>
+                <th>OrderDate</th>
+                <th>Status</th>
+                <th>Channel</th>
+                <th>TotalAmount</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>O1001</td>
+                <td>C001</td>
+                <td>E001</td>
+                <td>2025-10-01</td>
+                <td>Completed</td>
+                <td>In-Person</td>
+                <td>42.50</td>
+              </tr>
+              <tr>
+                <td>O1002</td>
+                <td>C003</td>
+                <td>E003</td>
+                <td>2025-10-02</td>
+                <td>In Progress</td>
+                <td>Online</td>
+                <td>27.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
+

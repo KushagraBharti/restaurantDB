@@ -1,0 +1,112 @@
+/* manage_employees.html */
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Employees – Restaurant DB System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-title">Restaurant Database System</div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="customer_order.html">Place Order</a>
+        <a href="order_status.html">Orders</a>
+        <a href="manage_menu_items.html">Menu Items</a>
+        <a href="manage_ingredients.html">Ingredients</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="card">
+        <div class="card-header">
+          <h1 class="page-title">Employees</h1>
+          <span class="tag">Employees</span>
+        </div>
+        <p class="page-subtitle">
+          Maintain staff records for
+          <strong>Employees(EmployeeID, Name, Role, Schedule, Salary)</strong>.
+        </p>
+
+        <form action="save_employee.php" method="post">
+          <div class="form-grid form-grid-2">
+            <div class="form-group">
+              <label for="employeeId">EmployeeID</label>
+              <input id="employeeId" name="EmployeeID" type="text" placeholder="e.g. E001">
+            </div>
+            <div class="form-group">
+              <label for="employeeName">Name</label>
+              <input id="employeeName" name="Name" type="text" placeholder="Employee full name">
+            </div>
+            <div class="form-group">
+              <label for="employeeRole">Role</label>
+              <input id="employeeRole" name="Role" type="text" placeholder="e.g. Server, Cook, Manager">
+            </div>
+            <div class="form-group">
+              <label for="employeeSchedule">Schedule</label>
+              <input id="employeeSchedule" name="Schedule" type="text" placeholder="e.g. Weekdays 9–5">
+            </div>
+            <div class="form-group">
+              <label for="employeeSalary">Salary</label>
+              <input id="employeeSalary" name="Salary" type="number" step="0.01" min="0">
+            </div>
+          </div>
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary">Save Employee</button>
+            <button type="reset" class="btn btn-outline">Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2 class="card-title">Sample Employees (mock data)</h2>
+          <span class="card-note">Each row corresponds to one tuple in Employees.</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>EmployeeID</th>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Schedule</th>
+                <th>Salary</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>E001</td>
+                <td>Avery Chen</td>
+                <td>Front Counter</td>
+                <td>Mon–Fri 9–5</td>
+                <td>18.50</td>
+              </tr>
+              <tr>
+                <td>E002</td>
+                <td>Miguel Lopez</td>
+                <td>Server</td>
+                <td>Mon–Sun 4–10</td>
+                <td>16.00</td>
+              </tr>
+              <tr>
+                <td>E003</td>
+                <td>Sara Patel</td>
+                <td>Online Orders</td>
+                <td>Fri–Sun 11–8</td>
+                <td>17.25</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
+

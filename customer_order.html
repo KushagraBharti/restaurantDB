@@ -1,0 +1,238 @@
+/* customer_order.html */
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Place Order – Restaurant DB System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-title">Restaurant Database System</div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="order_status.html">Orders</a>
+        <a href="manage_menu_items.html">Menu Items</a>
+        <a href="manage_ingredients.html">Ingredients</a>
+        <a href="manage_employees.html">Employees</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="card">
+        <div class="card-header">
+          <h1 class="page-title">Place / Edit Order</h1>
+          <span class="tag">Orders, Customers, OrderItems, Payments</span>
+        </div>
+        <p class="page-subtitle">
+          This form collects data for <strong>Customers</strong>, <strong>Orders</strong>,
+          <strong>OrderItems</strong>, and <strong>Payments</strong>. In Phase 4, it will submit to PHP/SQL.
+        </p>
+
+        <form action="create_order.php" method="post">
+          <div class="card" style="margin-bottom:1.25rem;">
+            <div class="card-header">
+              <h2 class="card-title">Customer</h2>
+              <span class="card-note">Matches relation: Customers(CustomerID, Name, Email, Phone, Address)</span>
+            </div>
+            <div class="form-grid form-grid-2">
+              <div class="form-group">
+                <label for="customerId">Customer ID</label>
+                <input id="customerId" name="CustomerID" type="text" placeholder="e.g. C001">
+                <span class="helper-text">Existing ID, or leave blank for new customers (DB will generate later).</span>
+              </div>
+              <div class="form-group">
+                <label for="customerName">Name</label>
+                <input id="customerName" name="CustomerName" type="text" placeholder="Customer full name">
+              </div>
+              <div class="form-group">
+                <label for="customerEmail">Email</label>
+                <input id="customerEmail" name="Email" type="email" placeholder="name@example.com">
+              </div>
+              <div class="form-group">
+                <label for="customerPhone">Phone</label>
+                <input id="customerPhone" name="Phone" type="tel" placeholder="(555) 555-5555">
+              </div>
+              <div class="form-group" style="grid-column:1 / -1;">
+                <label for="customerAddress">Address</label>
+                <input id="customerAddress" name="Address" type="text" placeholder="Street, City, State, ZIP">
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:1.25rem;">
+            <div class="card-header">
+              <h2 class="card-title">Order</h2>
+              <span class="card-note">
+                Matches relation: Orders(OrderID, CustomerID, EmployeeID, OrderDate, Status, Channel, TotalAmount)
+              </span>
+            </div>
+            <div class="form-grid form-grid-2">
+              <div class="form-group">
+                <label for="orderId">Order ID</label>
+                <input id="orderId" name="OrderID" type="text" placeholder="e.g. O1001">
+                <span class="helper-text">Can be auto-generated later; included here to match the schema.</span>
+              </div>
+              <div class="form-group">
+                <label for="employeeId">Handled by Employee (EmployeeID)</label>
+                <select id="employeeId" name="EmployeeID">
+                  <option value="">Select employee</option>
+                  <option value="E001">E001 – Front Counter</option>
+                  <option value="E002">E002 – Server</option>
+                  <option value="E003">E003 – Online Orders</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="orderDate">Order Date</label>
+                <input id="orderDate" name="OrderDate" type="date">
+              </div>
+              <div class="form-group">
+                <label for="orderChannel">Channel</label>
+                <select id="orderChannel" name="Channel">
+                  <option value="In-Person">In-Person</option>
+                  <option value="Online">Online</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="orderStatus">Status</label>
+                <select id="orderStatus" name="Status">
+                  <option value="Pending">Pending</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="totalAmount">Total Amount</label>
+                <input id="totalAmount" name="TotalAmount" type="number" step="0.01" min="0">
+              </div>
+            </div>
+          </div>
+
+          <div class="card" style="margin-bottom:1.25rem;">
+            <div class="card-header">
+              <h2 class="card-title">Order Items</h2>
+              <span class="card-note">
+                Matches relation: OrderItems(OrderID, LineNo, ItemID, Quantity)
+              </span>
+            </div>
+            <p class="helper-text">
+              For simplicity, this interface shows three order lines. Line numbers correspond to LineNo.
+            </p>
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>LineNo</th>
+                    <th>Menu Item (ItemID)</th>
+                    <th>Quantity</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <input type="number" name="LineNo1" value="1" min="1">
+                    </td>
+                    <td>
+                      <select name="ItemID1">
+                        <option value="">Select menu item</option>
+                        <option value="M001">M001 – Margherita Pizza</option>
+                        <option value="M002">M002 – Veggie Burger</option>
+                        <option value="M003">M003 – Grilled Chicken Bowl</option>
+                        <option value="M004">M004 – Caesar Salad</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="number" name="Quantity1" value="1" min="1">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="number" name="LineNo2" value="2" min="1">
+                    </td>
+                    <td>
+                      <select name="ItemID2">
+                        <option value="">(optional)</option>
+                        <option value="M001">M001 – Margherita Pizza</option>
+                        <option value="M002">M002 – Veggie Burger</option>
+                        <option value="M003">M003 – Grilled Chicken Bowl</option>
+                        <option value="M004">M004 – Caesar Salad</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="number" name="Quantity2" min="1">
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <input type="number" name="LineNo3" value="3" min="1">
+                    </td>
+                    <td>
+                      <select name="ItemID3">
+                        <option value="">(optional)</option>
+                        <option value="M001">M001 – Margherita Pizza</option>
+                        <option value="M002">M002 – Veggie Burger</option>
+                        <option value="M003">M003 – Grilled Chicken Bowl</option>
+                        <option value="M004">M004 – Caesar Salad</option>
+                      </select>
+                    </td>
+                    <td>
+                      <input type="number" name="Quantity3" min="1">
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Payment</h2>
+              <span class="card-note">
+                Matches relation: Payments(OrderID, PaymentNo, Method, Amount, Status)
+              </span>
+            </div>
+            <div class="form-grid form-grid-2">
+              <div class="form-group">
+                <label for="paymentNo">Payment No</label>
+                <input id="paymentNo" name="PaymentNo" type="number" min="1" value="1">
+                <span class="helper-text">Allows split payments by incrementing this number.</span>
+              </div>
+              <div class="form-group">
+                <label for="paymentMethod">Method</label>
+                <select id="paymentMethod" name="Method">
+                  <option value="Cash">Cash</option>
+                  <option value="Card">Card</option>
+                  <option value="Online">Online</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="paymentAmount">Amount</label>
+                <input id="paymentAmount" name="Amount" type="number" step="0.01" min="0">
+              </div>
+              <div class="form-group">
+                <label for="paymentStatus">Status</label>
+                <select id="paymentStatus" name="Status">
+                  <option value="Pending">Pending</option>
+                  <option value="Authorized">Authorized</option>
+                  <option value="Captured">Captured</option>
+                  <option value="Refunded">Refunded</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary">Save Order</button>
+            <button type="reset" class="btn btn-outline">Clear Form</button>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

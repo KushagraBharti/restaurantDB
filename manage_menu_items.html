@@ -1,0 +1,155 @@
+/* manage_menu_items.html */
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Menu Items – Restaurant DB System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-title">Restaurant Database System</div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="customer_order.html">Place Order</a>
+        <a href="order_status.html">Orders</a>
+        <a href="manage_ingredients.html">Ingredients</a>
+        <a href="manage_employees.html">Employees</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="card">
+        <div class="card-header">
+          <h1 class="page-title">Menu Items</h1>
+          <span class="tag">MenuItems</span>
+        </div>
+        <p class="page-subtitle">
+          Create or edit menu items. This form matches
+          <strong>MenuItems(ItemID, Name, Description, Price, Category, IsActive)</strong>.
+        </p>
+
+        <form action="save_menu_item.php" method="post">
+          <div class="form-grid form-grid-2">
+            <div class="form-group">
+              <label for="itemId">ItemID</label>
+              <input id="itemId" name="ItemID" type="text" placeholder="e.g. M001">
+            </div>
+            <div class="form-group">
+              <label for="itemName">Name</label>
+              <input id="itemName" name="Name" type="text" placeholder="Menu item name">
+            </div>
+            <div class="form-group">
+              <label for="itemCategory">Category</label>
+              <input id="itemCategory" name="Category" type="text" placeholder="e.g. Pizza, Salad">
+            </div>
+            <div class="form-group">
+              <label for="itemPrice">Price</label>
+              <input id="itemPrice" name="Price" type="number" step="0.01" min="0">
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label for="itemDescription">Description</label>
+              <textarea id="itemDescription" name="Description" placeholder="Short description of the dish"></textarea>
+            </div>
+            <div class="form-group checkbox-row">
+              <input id="itemIsActive" name="IsActive" type="checkbox" value="1" checked>
+              <label for="itemIsActive">Is Active (available on menu)</label>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary">Save Menu Item</button>
+            <button type="reset" class="btn btn-outline">Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2 class="card-title">Recipe Components</h2>
+          <span class="tag">RecipeComponents &amp; Ingredients</span>
+        </div>
+        <p class="page-subtitle">
+          Define how each <strong>MenuItem</strong> uses <strong>Ingredients</strong>. This form matches
+          <strong>RecipeComponents(ItemID, ComponentNo, IngredientID, QtyPerItem)</strong>.
+        </p>
+
+        <form action="save_recipe_component.php" method="post">
+          <div class="form-grid form-grid-2">
+            <div class="form-group">
+              <label for="rcItemId">Menu Item (ItemID)</label>
+              <select id="rcItemId" name="ItemID">
+                <option value="">Select ItemID</option>
+                <option value="M001">M001 – Margherita Pizza</option>
+                <option value="M002">M002 – Veggie Burger</option>
+                <option value="M003">M003 – Grilled Chicken Bowl</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="rcComponentNo">ComponentNo</label>
+              <input id="rcComponentNo" name="ComponentNo" type="number" min="1" value="1">
+            </div>
+            <div class="form-group">
+              <label for="rcIngredientId">Ingredient (IngredientID)</label>
+              <select id="rcIngredientId" name="IngredientID">
+                <option value="">Select Ingredient</option>
+                <option value="I001">I001 – Tomato Sauce</option>
+                <option value="I002">I002 – Mozzarella</option>
+                <option value="I003">I003 – Burger Bun</option>
+                <option value="I004">I004 – Lettuce</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="rcQtyPerItem">QtyPerItem</label>
+              <input id="rcQtyPerItem" name="QtyPerItem" type="number" step="0.01" min="0">
+              <span class="helper-text">Quantity of this ingredient per single menu item (matches Unit in Ingredients).</span>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary">Save Recipe Component</button>
+            <button type="reset" class="btn btn-outline">Clear</button>
+          </div>
+        </form>
+
+        <div class="section-divider"></div>
+        <h3 class="card-title" style="margin-bottom:0.5rem;">Sample RecipeComponents (mock data)</h3>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>ItemID</th>
+                <th>ComponentNo</th>
+                <th>IngredientID</th>
+                <th>QtyPerItem</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>M001</td>
+                <td>1</td>
+                <td>I001</td>
+                <td>0.20</td>
+              </tr>
+              <tr>
+                <td>M001</td>
+                <td>2</td>
+                <td>I002</td>
+                <td>0.15</td>
+              </tr>
+              <tr>
+                <td>M002</td>
+                <td>1</td>
+                <td>I003</td>
+                <td>1.00</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

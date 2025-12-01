@@ -1,0 +1,111 @@
+/* manage_ingredients.html */
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Manage Ingredients – Restaurant DB System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-title">Restaurant Database System</div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="customer_order.html">Place Order</a>
+        <a href="order_status.html">Orders</a>
+        <a href="manage_menu_items.html">Menu Items</a>
+        <a href="manage_employees.html">Employees</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="card">
+        <div class="card-header">
+          <h1 class="page-title">Ingredients</h1>
+          <span class="tag">Ingredients</span>
+        </div>
+        <p class="page-subtitle">
+          Manage stock for <strong>Ingredients(IngredientID, Name, QuantityAvailable, Unit, ReorderLevel)</strong>.
+        </p>
+
+        <form action="save_ingredient.php" method="post">
+          <div class="form-grid form-grid-2">
+            <div class="form-group">
+              <label for="ingredientId">IngredientID</label>
+              <input id="ingredientId" name="IngredientID" type="text" placeholder="e.g. I001">
+            </div>
+            <div class="form-group">
+              <label for="ingredientName">Name</label>
+              <input id="ingredientName" name="Name" type="text" placeholder="Ingredient name">
+            </div>
+            <div class="form-group">
+              <label for="quantityAvailable">QuantityAvailable</label>
+              <input id="quantityAvailable" name="QuantityAvailable" type="number" step="0.01" min="0">
+            </div>
+            <div class="form-group">
+              <label for="unit">Unit</label>
+              <input id="unit" name="Unit" type="text" placeholder="e.g. kg, L, pcs">
+            </div>
+            <div class="form-group">
+              <label for="reorderLevel">ReorderLevel</label>
+              <input id="reorderLevel" name="ReorderLevel" type="number" step="0.01" min="0">
+              <span class="helper-text">When stock falls below this amount, the item should be reordered.</span>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button type="submit" class="btn btn-primary">Save Ingredient</button>
+            <button type="reset" class="btn btn-outline">Clear</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2 class="card-title">Sample Ingredients (mock data)</h2>
+          <span class="card-note">These rows correspond exactly to the Ingredients relation.</span>
+        </div>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>IngredientID</th>
+                <th>Name</th>
+                <th>QuantityAvailable</th>
+                <th>Unit</th>
+                <th>ReorderLevel</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>I001</td>
+                <td>Tomato Sauce</td>
+                <td>15.0</td>
+                <td>kg</td>
+                <td>5.0</td>
+              </tr>
+              <tr>
+                <td>I002</td>
+                <td>Mozzarella</td>
+                <td>10.0</td>
+                <td>kg</td>
+                <td>3.0</td>
+              </tr>
+              <tr>
+                <td>I003</td>
+                <td>Burger Buns</td>
+                <td>120</td>
+                <td>pcs</td>
+                <td>40</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

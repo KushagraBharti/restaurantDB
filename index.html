@@ -1,0 +1,77 @@
+/* index.html */
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Restaurant DB System – Home</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="navbar-title">Restaurant Database System</div>
+      <nav class="nav-links">
+        <a href="customer_order.html">Place Order</a>
+        <a href="order_status.html">Orders</a>
+        <a href="manage_menu_items.html">Menu Items</a>
+        <a href="manage_ingredients.html">Ingredients</a>
+        <a href="manage_employees.html">Employees</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <section class="card">
+        <div class="card-header">
+          <h1 class="page-title">Project Phase 3 – Interfaces</h1>
+        </div>
+        <p class="page-subtitle">
+          Minimal HTML/CSS front-end for the Restaurant Database System.
+          These pages match our EER diagram and relational schema and will later connect to PHP + SQL.
+        </p>
+        <div class="form-grid form-grid-2">
+          <div>
+            <h2 class="card-title">Core Entities</h2>
+            <ul class="helper-text" style="margin-top:0.5rem; list-style:disc; padding-left:1.2rem;">
+              <li>Customers</li>
+              <li>Employees</li>
+              <li>MenuItems</li>
+              <li>Ingredients</li>
+              <li>Orders &amp; OrderItems</li>
+              <li>RecipeComponents</li>
+              <li>Payments</li>
+            </ul>
+          </div>
+          <div>
+            <h2 class="card-title">Main Screens</h2>
+            <ul class="helper-text" style="margin-top:0.5rem; list-style:disc; padding-left:1.2rem;">
+              <li>Place new customer orders</li>
+              <li>Search and view orders</li>
+              <li>Manage menu items &amp; recipe components</li>
+              <li>Manage ingredients and stock levels</li>
+              <li>Manage employees</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-header">
+          <h2 class="card-title">Quick Navigation</h2>
+        </div>
+        <div class="form-grid form-grid-2">
+          <a class="btn btn-outline" href="customer_order.html">➜ Place / Edit Order</a>
+          <a class="btn btn-outline" href="order_status.html">➜ Find Orders</a>
+          <a class="btn btn-outline" href="manage_menu_items.html">➜ Manage Menu Items</a>
+          <a class="btn btn-outline" href="manage_ingredients.html">➜ Manage Ingredients</a>
+          <a class="btn btn-outline" href="manage_employees.html">➜ Manage Employees</a>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
+
+
