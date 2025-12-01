@@ -69,34 +69,6 @@ foreach ($statQueries as $key => $sql) {
           Minimal PHP + MySQL front-end for the Restaurant Database System.
           These pages match our EER diagram and relational schema and now connect to live data.
         </p>
-
-        <div class="stat-grid">
-          <a class="stat-card" href="order_status.php">
-            <div class="stat-label">Orders</div>
-            <div class="stat-value"><?php echo h($counts["Orders"] ?? "—"); ?></div>
-            <div class="stat-sub">View recent orders</div>
-          </a>
-          <a class="stat-card" href="manage_menu_items.php">
-            <div class="stat-label">Active Menu Items</div>
-            <div class="stat-value"><?php echo h($counts["ActiveMenu"] ?? "—"); ?></div>
-            <div class="stat-sub">Maintain dishes</div>
-          </a>
-          <a class="stat-card" href="manage_employees.php">
-            <div class="stat-label">Employees</div>
-            <div class="stat-value"><?php echo h($counts["Employees"] ?? "—"); ?></div>
-            <div class="stat-sub">Staff roster</div>
-          </a>
-          <a class="stat-card" href="manage_ingredients.php">
-            <div class="stat-label">Ingredients</div>
-            <div class="stat-value"><?php echo h($counts["Ingredients"] ?? "—"); ?></div>
-            <div class="stat-sub">Inventory</div>
-          </a>
-          <a class="stat-card" href="customer_order.php">
-            <div class="stat-label">Customers</div>
-            <div class="stat-value"><?php echo h($counts["Customers"] ?? "—"); ?></div>
-            <div class="stat-sub">Create orders</div>
-          </a>
-        </div>
       </section>
 
       <section class="card">
