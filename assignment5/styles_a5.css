@@ -1,0 +1,127 @@
+/* styles_a5.css - simple light theme for Assignment 5 */
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #f6f7fb;
+  color: #111827;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 3rem;
+}
+
+header h1 {
+  margin: 0 0 0.25rem;
+  font-size: 1.6rem;
+}
+
+header p {
+  margin: 0 0 0.75rem;
+  color: #4b5563;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-top: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+}
+
+label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 0.85rem;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.button-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 0.65rem 1rem;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.3);
+}
+
+button.secondary {
+  background: #10b981;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+
+button:hover {
+  opacity: 0.95;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.75rem;
+  font-size: 0.95rem;
+}
+
+th, td {
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+th {
+  background: #f3f4f6;
+  font-weight: 700;
+}
+
+tr:nth-child(even) td {
+  background: #f9fafb;
+}
+
+pre {
+  background: #0f172a;
+  color: #e5e7eb;
+  padding: 1rem;
+  border-radius: 10px;
+  overflow-x: auto;
+  border: 1px solid #1f2937;
+}
+
+.notice {
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  background: #e0f2fe;
+  border: 1px solid #bae6fd;
+  color: #0f172a;
+  margin-top: 0.75rem;
+}
+
+.notice.error {
+  background: #fee2e2;
+  border-color: #fecdd3;
+  color: #7f1d1d;
+}
